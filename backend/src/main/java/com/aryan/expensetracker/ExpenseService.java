@@ -24,6 +24,15 @@ public class ExpenseService {
         return expenseRepository.save(expense);
     }
 
+    public Expense updateExpense(Long id, Expense expense) {
+        Expense existingExpense = expenseRepository.findById(id).orElse(null);
+        existingExpense.setAmount(expense.getAmount());
+        existingExpense.setDate(expense.getDate());
+        existingExpense.setDescription(expense.getDescription());
+        existingExpense.setCategory(expense.getCategory());
+        return expenseRepository.save(existingExpense);
+    }
+
     public void deleteExpense(Long id) {
         expenseRepository.deleteById(id);
     }

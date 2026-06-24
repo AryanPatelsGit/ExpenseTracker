@@ -20,6 +20,11 @@ public class Expense {
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = LocalDateTime.now();
+    }
+
     //Getters and Setters
     public Long getId() {
         return id;

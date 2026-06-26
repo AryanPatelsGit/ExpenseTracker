@@ -25,17 +25,25 @@ function App() {
   };
 
   const handleSubmit = () => {
-    fetch('http://localhost:8080/api/expenses', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json'},
-      body: JSON.stringify(form)
-  })
+    const url = editingId ? `http://localhost:8080/api/expenses/${editingId}` : 'http://localhost:8080/api/expenses';
+
+    const method = editingId ? 'PUT' : 'POST';
+
+    fetch(url, {
+      method: method,
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        ...form,
+        amount: parseFloat(form.amount)
+      })
+    })
     .then(response => response.json())
     .then(() => {
       fetchExpenses();
       setForm({ amount: '', category: '', date: '', description: ''});
+      setEditingId(null);
     })
-  .catch(error => console.error('Error adding expense:', error));
+    .catch(error => console.error('Error saving expense:', error));
   };
 
   const handleDelete = (id) => {

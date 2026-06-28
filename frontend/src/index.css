@@ -1,1 +1,75 @@
 @import "tailwindcss";
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: #e6e8ee;
+  background-color: #0a0b10;
+  background-image:
+    radial-gradient(120% 90% at 20% -10%, rgba(216,90,48,0.30), transparent 55%),
+    radial-gradient(120% 90% at 85% 0%, rgba(55,138,221,0.28), transparent 55%),
+    radial-gradient(100% 80% at 60% 110%, rgba(127,119,221,0.20), transparent 60%);
+  background-attachment: fixed;
+}
+
+.gradient-text {
+  background: linear-gradient(95deg, #ffd9c2, #f0997b, #9d7bdd, #85b7eb);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.glass-input {
+  background: rgba(255,255,255,0.06);
+  border: 0.5px solid rgba(255,255,255,0.14);
+  border-radius: 10px;
+  padding: 9px 12px;
+  color: #e6e8ee;
+  outline: none;
+}
+.glass-input::placeholder { color: #8b93a3; }
+.glass-input:focus { border-color: rgba(255,255,255,0.30); }
+
+.glass-card {
+  background: rgba(255,255,255,0.05);
+  border: 0.5px solid rgba(255,255,255,0.12);
+  border-radius: 12px;
+  padding: 14px;
+  backdrop-filter: blur(8px);
+}
+
+.btn-add {
+  background: linear-gradient(135deg, rgba(216,90,48,0.55), rgba(55,138,221,0.55));
+  color: #fff;
+  border: 0.5px solid rgba(255,255,255,0.30);
+  border-radius: 10px;
+  padding: 9px 20px;
+  font-weight: 500;
+  backdrop-filter: blur(6px);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.25);
+  cursor: pointer;
+}
+
+.btn-edit {
+  background: linear-gradient(135deg, rgba(239,159,39,0.28), rgba(239,159,39,0.10));
+  color: #f5c98a;
+  border: 0.5px solid rgba(239,159,39,0.40);
+  border-radius: 8px;
+  padding: 5px 14px;
+  font-size: 12px;
+  backdrop-filter: blur(6px);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.15);
+  cursor: pointer;
+}
+
+.btn-delete {
+  background: linear-gradient(135deg, rgba(226,75,74,0.28), rgba(226,75,74,0.10));
+  color: #f29c9b;
+  border: 0.5px solid rgba(226,75,74,0.40);
+  border-radius: 8px;
+  padding: 5px 14px;
+  font-size: 12px;
+  backdrop-filter: blur(6px);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.15);
+  cursor: pointer;
+}

@@ -84,8 +84,8 @@ function App() {
   };
 
   return (
-    <div className="p-8 max-w-2xl mx-auto">
-      <h1 className="text-3xl font-bold text-blue-600 mb-4">Expense Tracker</h1>
+    <div className="max-w-2xl mx-auto px-4 py-10">
+      <h1 className="text-4xl font-bold mb-6 gradient-text">Expense Tracker</h1>
 
       <div className="mb-6 flex gap-2 flex-wrap">
         <input
@@ -94,26 +94,26 @@ function App() {
           placeholder="Amount"
           value={form.amount}
           onChange={handleChange}
-          className="border rounded px-3 py-2"
+          className="glass-input flex-1 min-w-[90px]"
         />
         <select
           name="category"
           value={form.category}
           onChange={handleChange}
-          className="border rounded px-3 py-2"
+          className="glass-input flex-1 min-w-[90px]"
         >
-          <option>Groceries</option>
-          <option>Transport</option>
-          <option>Utilities</option>
-          <option>Dining</option>
-          <option>Other</option>
+          <option className="text-black"> Groceries </option>
+          <option className="text-black"> Transport </option>
+          <option className="text-black"> Utilities </option>
+          <option className="text-black"> Dining </option>
+          <option className="text-black"> Other </option>
         </select>
         <input
           type="date"
           name="date"
           value={form.date}
           onChange={handleChange}
-          className="border rounded px-3 py-2"
+          className="glass-input flex-1 min-w-[90px]"
         />
         <input
           type="text"
@@ -121,31 +121,29 @@ function App() {
           placeholder="Description"
           value={form.description}
           onChange={handleChange}
-          className="border rounded px-3 py-2"
+          className="glass-input flex-1 min-w-[120px]"
         />
       </div>
 
-      <button
-        onClick={handleSubmit}
-        className="bg-blue-600 text-white rounded px-4 py-2 hover:bg-blue-700">
-        Add Expense
+      <button onClick={handleSubmit} className="btn-add mb-6 w-full">
+        {editingId ? 'Update' : 'Add'}
       </button>
 
-    <div className="mb-6 grid grid-cols-2 gap-4">
-      <div className="border rounded p-4">
-        <h2 className="font-bold mb-2"> By category </h2>
+    <div className="mb-6 grid grid-cols-2 gap-3">
+      <div className="glass-card">
+        <h2 className="text-sm text-gray-400 mb-2"> By category </h2>
         {categoryTotals.map((row, index) => (
-          <div key={index} className="flex justify-between">
+          <div key={index} className="flex justify-between text-gray-100 py-0.5">
             <span> {row[0]} </span>
             <span> ${row[1]} </span>
           </div>
         ))}
       </div>
 
-      <div className="border rounded p-4">
-        <h2 className="font-bold mb-2"> By month </h2>
+      <div className="glass-card">
+        <h2 className="text-sm text-gray-400 mb-2"> By month </h2>
         {monthTotals.map((row, index) => (
-          <div key={index} className="flex justify-between">
+          <div key={index} className="flex justify-between text-gray-100 py-0.5">
             <span> {row[0]} </span>
             <span> ${row[1]} </span>
           </div>
@@ -155,19 +153,19 @@ function App() {
 
       <ul>
         {expenses.map(expense => (
-          <li key={expense.id} className="border-b py-2">
-            <span>
+          <li key={expense.id} className="flex justify-between items-center py-3 border-b border-white/10">
+            <span className="text-gray-100">
               {expense.category} — ${expense.amount} — {expense.date}
             </span>
             <div className="flex gap-2">
               <button
                 onClick={() => handleEdit(expense)}
-                className="bg-yellow-500 text-white rounded px-3 py-1 text-sm hover:bg-yellow-600">
+                className="btn-edit">
                   Edit
               </button>
               <button
               onClick={() => handleDelete(expense.id)}
-              className="bg-red-500 text-white rounded px-3 py-1 text-sm hover:bg-red-600">
+              className="btn-delete">
                 Delete
             </button>
             </div>

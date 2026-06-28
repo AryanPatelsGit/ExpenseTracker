@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { PieChart, Pie, Cell, Tooltip, Legend } from 'recharts';
 
 function App() {
   const [expenses, setExpenses] = useState([]);
@@ -83,6 +84,13 @@ function App() {
     setEditingId(expense.id);
   };
 
+  const chartData = categoryTotals.map(row => ({
+    name: row[0],
+    value: row[1]
+  }));
+
+  const COLORS = ['#f0997b', '#85b7eb', '#9d7bdd', '#1d9e75', '#efb45a'];
+
   return (
     <div className="max-w-2xl mx-auto px-4 py-10">
       <h1 className="text-4xl font-bold mb-6 gradient-text">Expense Tracker</h1>
@@ -149,6 +157,53 @@ function App() {
           </div>
         ))}
       </div>
+    </div>
+
+    <div className="glass-card mb-6 flex justify-center">
+        <PieChart width={400} height={300}>
+          <defs>
+            {[
+              ['#f0997b', '#d85a30'],
+              ['#85b7eb', '#378add'],
+              ['#b5a8f0', '#7f77dd'],
+              ['#5dcaa5', '#1d9e75'],
+              ['#f4c775', '#ef9f27'],
+            ].map((pair, i) => (
+              <linearGradient key={i} id={`g${i}`} x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stopColor={pair[0]} stopOpacity={0.9} />
+                <stop offset="100%" stopColor={pair[1]} stopOpacity={0.45} />
+              </linearGradient>
+            ))}
+          </defs>
+          <Pie
+            data={chartData}
+            dataKey="value"
+            nameKey="name"
+            cx="50%"
+            cy="50%"
+            outerRadius={100}
+            innerRadius={55}
+            paddingAngle={3}
+            stroke="rgba(255,255,255,0.15)"
+            strokeWidth={1}
+            label={({ percent }) => `${(percent * 100).toFixed(0)}%`}
+            labelLine={false}
+            >
+              {chartData.map((entry, index) => (
+                <Cell key={index} fill={`url(#g${index % 5})`} />
+              ))}
+          </Pie>
+          <Tooltip
+            contentStyle={{
+              background: 'rgba(20,22,30,0.95)',
+              border: '0.5px solid rgba(255,255,255,0.15)',
+              borderRadius: '10px',
+              color: 'white'
+            }}
+            itemStyle={{ color: 'white'}}
+          />
+          <Legend wrapperStyle={{ color: 'white' }} />
+        </PieChart>
     </div>
 
       <ul>

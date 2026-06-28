@@ -1,6 +1,7 @@
 package com.aryan.expensetracker;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
 import java.util.List;
 
 @Service
@@ -35,5 +36,13 @@ public class ExpenseService {
 
     public void deleteExpense(Long id) {
         expenseRepository.deleteById(id);
+    }
+
+    public List<Object[]> getTotalsByCategory() {
+        return expenseRepository.getTotalsByCategory();
+    }
+
+    public List<Object[]> getTotalsByMonth() {
+        return expenseRepository.getTotalsByMonth();
     }
 }

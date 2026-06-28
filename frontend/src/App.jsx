@@ -9,6 +9,8 @@ function App() {
     description: ''
   });
   const [editingId, setEditingId] = useState(null);
+  const [categoryTotals, setCategoryTotals] = useState([]);
+  const [monthTotals, setMonthTotals] = useState([]);
 
   const fetchExpenses = () => {
     fetch('http://localhost:8080/api/expenses')
@@ -16,8 +18,21 @@ function App() {
       .then(data => setExpenses(data))
       .catch(error => console.error('Error fetching expenses:', error));
   };
+
+  const fetchSummaries = () => {
+    fetch('http://localhost:8080/api/expenses/summary/category')
+      .then(res => res.json())
+      .then(data => setCategoryTotals(data))
+      .catch(err => console.error('Error fetching category totals:', err))
+
+    fetch('http://localhost:8080/api/expenses/summary/month')
+      .then(res => res.json())
+      .then(data => setMonthTotals(data))
+      .catch(err => console.error('Error fetching month totals:', err))
+  };
     useEffect(() => {
       fetchExpenses();
+      fetchSummaries();
     }, []);
 
   const handleChange = (e) => {
@@ -40,6 +55,7 @@ function App() {
     .then(response => response.json())
     .then(() => {
       fetchExpenses();
+      fetchSummaries();
       setForm({ amount: '', category: '', date: '', description: ''});
       setEditingId(null);
     })
@@ -50,7 +66,10 @@ function App() {
     fetch(`http://localhost:8080/api/expenses/${id}`, {
       method: 'DELETE'
     })
-    .then(() => fetchExpenses())
+    .then(() => {
+      fetchExpenses();
+      fetchSummaries();
+    })
     .catch(error => console.error('Error deleting expense:', error));
   };
 
@@ -111,6 +130,28 @@ function App() {
         className="bg-blue-600 text-white rounded px-4 py-2 hover:bg-blue-700">
         Add Expense
       </button>
+
+    <div className="mb-6 grid grid-cols-2 gap-4">
+      <div className="border rounded p-4">
+        <h2 className="font-bold mb-2"> By category </h2>
+        {categoryTotals.map((row, index) => (
+          <div key={index} className="flex justify-between">
+            <span> {row[0]} </span>
+            <span> ${row[1]} </span>
+          </div>
+        ))}
+      </div>
+
+      <div className="border rounded p-4">
+        <h2 className="font-bold mb-2"> By month </h2>
+        {monthTotals.map((row, index) => (
+          <div key={index} className="flex justify-between">
+            <span> {row[0]} </span>
+            <span> ${row[1]} </span>
+          </div>
+        ))}
+      </div>
+    </div>
 
       <ul>
         {expenses.map(expense => (

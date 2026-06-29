@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { PieChart, Pie, Cell, Tooltip, Legend } from 'recharts';
 
 function App() {
+  const API_URL = import.meta.env.VITE_API_URL;
   const [expenses, setExpenses] = useState([]);
   const [form, setForm] = useState({
     amount: '',
@@ -16,7 +17,7 @@ function App() {
   const [error, setError] = useState('');
 
   const fetchExpenses = () => {
-    fetch('http://localhost:8080/api/expenses')
+    fetch(`${API_URL}/api/expenses`)
       .then(response => response.json())
       .then(data => {
         setExpenses(data);
@@ -29,12 +30,12 @@ function App() {
   };
 
   const fetchSummaries = () => {
-    fetch('http://localhost:8080/api/expenses/summary/category')
+    fetch(`${API_URL}/api/expenses/summary/category`)
       .then(res => res.json())
       .then(data => setCategoryTotals(data))
       .catch(err => console.error('Error fetching category totals:', err))
 
-    fetch('http://localhost:8080/api/expenses/summary/month')
+    fetch(`${API_URL}/api/expenses/summary/month`)
       .then(res => res.json())
       .then(data => setMonthTotals(data))
       .catch(err => console.error('Error fetching month totals:', err))
@@ -49,7 +50,7 @@ function App() {
   };
 
   const handleSubmit = () => {
-    const url = editingId ? `http://localhost:8080/api/expenses/${editingId}` : 'http://localhost:8080/api/expenses';
+    const url = editingId ? `${API_URL}/api/expenses/${editingId}` : `${API_URL}/api/expenses`;
 
     const method = editingId ? 'PUT' : 'POST';
 
@@ -82,7 +83,7 @@ function App() {
   };
 
   const handleDelete = (id) => {
-    fetch(`http://localhost:8080/api/expenses/${id}`, {
+    fetch(`${API_URL}/api/expenses/${id}`, {
       method: 'DELETE'
     })
     .then(() => {

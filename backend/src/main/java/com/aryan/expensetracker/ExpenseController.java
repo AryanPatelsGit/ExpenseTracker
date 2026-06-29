@@ -3,7 +3,7 @@ package com.aryan.expensetracker;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
-@CrossOrigin(origins = {"http://localhost:5173", "https://expense-tracker-ap4.netlify.app"})
+@CrossOrigin(origins = {"http://localhost:5173", "https://expense-tracker-api-olyf.onrender.com/"})
 @RestController
 @RequestMapping("/api/expenses")
 public class ExpenseController {

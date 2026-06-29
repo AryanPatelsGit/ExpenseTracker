@@ -13,6 +13,7 @@ function App() {
   const [categoryTotals, setCategoryTotals] = useState([]);
   const [monthTotals, setMonthTotals] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
 
   const fetchExpenses = () => {
     fetch('http://localhost:8080/api/expenses')
@@ -51,6 +52,16 @@ function App() {
     const url = editingId ? `http://localhost:8080/api/expenses/${editingId}` : 'http://localhost:8080/api/expenses';
 
     const method = editingId ? 'PUT' : 'POST';
+
+    if (!form.amount || parseFloat(form.amount) <= 0) {
+      setError('Please enter an amount greater than 0.');
+      return;
+    }
+    if (!form.data) {
+      setError('Please pick a date.');
+      return;
+    }
+    setError('');
 
     fetch(url, {
       method: method,
@@ -143,6 +154,8 @@ function App() {
       <button onClick={handleSubmit} className="btn-add mb-6 w-full">
         {editingId ? 'Update' : 'Add'}
       </button>
+
+    {error && <p className="text-red-300 text-sm mb-4"> {error} </p>}
 
     <div className="mb-6 grid grid-cols-2 gap-3">
       <div className="glass-card">

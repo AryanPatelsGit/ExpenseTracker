@@ -12,12 +12,19 @@ function App() {
   const [editingId, setEditingId] = useState(null);
   const [categoryTotals, setCategoryTotals] = useState([]);
   const [monthTotals, setMonthTotals] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const fetchExpenses = () => {
     fetch('http://localhost:8080/api/expenses')
       .then(response => response.json())
-      .then(data => setExpenses(data))
-      .catch(error => console.error('Error fetching expenses:', error));
+      .then(data => {
+        setExpenses(data);
+        setLoading(false);
+      })
+      .catch(error => {
+        console.error('Error fetching expenses:', error);
+        setLoading(false);
+      });
   };
 
   const fetchSummaries = () => {
@@ -206,27 +213,26 @@ function App() {
         </PieChart>
     </div>
 
-      <ul>
-        {expenses.map(expense => (
-          <li key={expense.id} className="flex justify-between items-center py-3 border-b border-white/10">
-            <span className="text-gray-100">
-              {expense.category} — ${expense.amount} — {expense.date}
-            </span>
-            <div className="flex gap-2">
-              <button
-                onClick={() => handleEdit(expense)}
-                className="btn-edit">
-                  Edit
-              </button>
-              <button
-              onClick={() => handleDelete(expense.id)}
-              className="btn-delete">
-                Delete
-            </button>
-            </div>
-          </li>
-        ))}
-      </ul>
+      {loading ? (
+        <p className="text-gray-400 text-center py-8"> Loading expenses... </p>
+      ) : expenses.length === 0 ? (
+        <p className="text-gray-400 text-center py-8"> No expense yet. Add your first one above. </p>
+      ) : (
+        <ul>
+          {expenses.map(expense => (
+            <li key={expense.id} className="flex justify-between items-center py-3 border-b border-white/10">
+              <span className="text-gray-100">
+                {expense.category} - ${expense.amount} - {expense.date}
+              </span>
+              <div className="flex gap-2">
+                <button onClick={() => handleEdit(expense)} className="btn-edit"> Edit </button>
+                <button onClick={() => handleDelete(expense)} className="btn-delete"> Delete </button>
+              </div>
+            </li>
+          ))}
+        </ul>
+      )
+    }
     </div>
   );
 }

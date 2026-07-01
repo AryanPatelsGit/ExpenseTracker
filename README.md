@@ -10,7 +10,7 @@ A full-stack expense tracking web application with full CRUD, category and month
 
 ## Screenshot
 
-![Expense Tracker screenshot](./screenshots/ExpenseTrackerSS0.png)
+![Expense Tracker screenshot](./Screenshot/ExpenseTrackerSS0.png)
 
 ---
 

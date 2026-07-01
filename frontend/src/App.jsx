@@ -58,7 +58,7 @@ function App() {
       setError('Please enter an amount greater than 0.');
       return;
     }
-    if (!form.data) {
+    if (!form.date) {
       setError('Please pick a date.');
       return;
     }
@@ -240,7 +240,7 @@ function App() {
               </span>
               <div className="flex gap-2">
                 <button onClick={() => handleEdit(expense)} className="btn-edit"> Edit </button>
-                <button onClick={() => handleDelete(expense)} className="btn-delete"> Delete </button>
+                <button onClick={() => handleDelete(expense.id)} className="btn-delete"> Delete </button>
               </div>
             </li>
           ))}
